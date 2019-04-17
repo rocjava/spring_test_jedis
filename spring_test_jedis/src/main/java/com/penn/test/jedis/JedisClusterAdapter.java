@@ -51,11 +51,6 @@ public class JedisClusterAdapter {
 		if (!isCacheEnabled()) {
 			return false;
 		}
-		log.info("++++++++++++++++++++++++key:"+key+"++++++++++++++++++++++++++++++++");
-		log.info("++++++++++++++++++++++++compare:"+(key == null)+"++++++++++++++++++++++++++++++++");
-
-		assert (key == null) : "key is null";
-		assert (value == null) : "value is null";
 		
 		try{
 			String result = getJedisCluster().setex(key, seconds, value);
@@ -86,8 +81,6 @@ public class JedisClusterAdapter {
 		if (!isCacheEnabled()) {
 			return false;
 		}
-		
-		assert (key == null) : "key is null";
 		
 		try{
 			Long result = getJedisCluster().setnx(key, value);
@@ -121,10 +114,7 @@ public class JedisClusterAdapter {
 		if (!isCacheEnabled()) {
 			return false;
 		}
-		
-		assert (key == null) : "key is null";
-		assert (value == null) : "value is null";
-		
+
 		try{
 			String result = getJedisCluster().getSet(key, value);
 			if(log.isDebugEnabled()) {
@@ -149,8 +139,6 @@ public class JedisClusterAdapter {
 		if (!isCacheEnabled()) {
 			return false;
 		}
-		
-		assert (key == null) : "key is null";
 		
 		try {
 			String obj = getJedisCluster().get(key);
@@ -179,9 +167,7 @@ public class JedisClusterAdapter {
 		if (!isCacheEnabled()) {
 			return result;
 		}
-		
-		assert (key == null) : "key is null";
-		
+
 		try{
 			result = getJedisCluster().ttl(key);
 			if(log.isDebugEnabled()) {
@@ -203,8 +189,6 @@ public class JedisClusterAdapter {
 			return null;
 		}
 		
-		assert (key == null) : "key is null";
-		
 		try{
 			String obj = getJedisCluster().get(key);
 			if(log.isDebugEnabled()) {
@@ -224,8 +208,6 @@ public class JedisClusterAdapter {
 		if (!isCacheEnabled()) {
 			return false;
 		}
-		
-		assert (key == null) : "key is null";
 		
 		try{
 			if(log.isDebugEnabled()) {
@@ -257,9 +239,6 @@ public class JedisClusterAdapter {
 		if (!isCacheEnabled()) {
             return null;
         }
-
-		assert (key == null) : "key is null";
-		assert (clazz == null) : "clazz is null";
 		
         byte[] obj = getJedisCluster().get(key.getBytes());
         if(obj == null){
@@ -279,10 +258,7 @@ public class JedisClusterAdapter {
 		if (!isCacheEnabled()) {
 			return false;
 		}
-		assert (key == null) : "key is null";
-		assert (value == null) : "value is null";
-        assert (seconds <= 0) : "seconds less than 0";
-        
+
         String isOk = getJedisCluster().setex(key.getBytes(), seconds, HessionSerializeUtil.serialize(value));
         if (!"OK".equals(isOk)) {
             if (log.isInfoEnabled()) log.info("set error : " + key);
@@ -303,9 +279,7 @@ public class JedisClusterAdapter {
 			return false;
 		}
 		
-		assert (key == null) : "key is null";
-		assert (value == null) : "value is null";
-		
+
 		Long isOk = getJedisCluster().setnx(key.getBytes(), HessionSerializeUtil.serialize(value));
         if (isOk != 1L) {
             if (log.isInfoEnabled()) log.info("setnx error : " + key);
@@ -327,9 +301,6 @@ public class JedisClusterAdapter {
 		if (!isCacheEnabled()) {
 			return false;
 		}
-		assert (key == null) : "key is null";
-		assert (value == null) : "value is null";
-        assert (seconds <= 0) : "seconds less than 0";
 		// NX – 只有键key不存在的时候才会设置key的值，EX seconds – 设置键key的过期时间，单位时秒
         String result = getJedisCluster().set(key, value, "NX", "EX", seconds);
         if (OK_CODE.equals(result) || OK_MULTI_CODE.equals(result)) {
@@ -354,9 +325,6 @@ public class JedisClusterAdapter {
 			return null;
 		}
 		
-		assert (key == null) : "key is null";
-		assert (value == null) : "value is null";
-		
 		byte[] rs = getJedisCluster().getSet(key.getBytes(), HessionSerializeUtil.serialize(value));
         if (rs == null) {
             if (log.isInfoEnabled()) log.info("getSet error : " + key);
@@ -378,10 +346,6 @@ public class JedisClusterAdapter {
 			return false;
 		}
 		
-		assert (key == null) : "key is null";
-		assert (field == null) : "field is null";
-		assert (value == null) : "value is null";
-		
 		Long code = getJedisCluster().hset(key, field, value);
 		if(code != null && code == 1){
 			return true;
@@ -402,10 +366,6 @@ public class JedisClusterAdapter {
 		if (!isCacheEnabled()) {
 			return false;
 		}
-		
-		assert (key == null) : "key is null";
-		assert (field == null) : "field is null";
-		assert (value == null) : "value is null";
 		
 		Long code = getJedisCluster().hset(key.getBytes(), field.getBytes(), HessionSerializeUtil.serialize(value));
 		if(code != null && code == 1){
@@ -429,10 +389,6 @@ public class JedisClusterAdapter {
             return null;
         }
 
-		assert (key == null) : "key is null";
-		assert (key == null) : "field is null";
-		assert (clazz == null) : "clazz is null";
-		
 		byte[] obj = getJedisCluster().hget(key.getBytes(), field.getBytes());
         if(obj == null){
         	return null;
@@ -453,9 +409,6 @@ public class JedisClusterAdapter {
             return null;
         }
 
-		assert (key == null) : "key is null";
-		assert (key == null) : "field is null";
-		
 		return getJedisCluster().hget(key, field);
 	}
 
@@ -469,9 +422,6 @@ public class JedisClusterAdapter {
 		if (!isCacheEnabled()) {
 			return false;
 		}
-
-		assert (key == null) : "key is null";
-		assert (seconds <= 0) : "seconds less than 0";
 
 		Long isOk = getJedisCluster().expire(key, seconds);
 
@@ -585,7 +535,6 @@ public class JedisClusterAdapter {
 	/**
 	 * 判断给定键值是否在redis缓存当中
 	 * @param key
-	 * @param field
 	 * @return
 	 */
 	public boolean exists(final String key){

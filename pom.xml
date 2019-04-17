@@ -7,7 +7,7 @@
     <groupId>com.spring.test</groupId>
     <artifactId>spring_jedis</artifactId>
     <version>1.0-SNAPSHOT</version>
-
+    <packaging>pom</packaging>
 
     <modules>
         <module>./spring_test_jedis</module>
