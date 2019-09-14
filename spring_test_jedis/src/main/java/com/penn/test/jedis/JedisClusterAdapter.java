@@ -88,7 +88,9 @@ public class JedisClusterAdapter {
 				log.debug("SET A OBJECT: KEY:" + key + ", result:" + result);
 			}
 			if (result != 1L) {
-	            if (log.isInfoEnabled()) log.info("setnx error : " + key);
+	            if (log.isInfoEnabled()) {
+					log.info("setnx error : " + key);
+				}
 	            return false;
 	        }
 			return true;
@@ -261,7 +263,10 @@ public class JedisClusterAdapter {
 
         String isOk = getJedisCluster().setex(key.getBytes(), seconds, HessionSerializeUtil.serialize(value));
         if (!"OK".equals(isOk)) {
-            if (log.isInfoEnabled()) log.info("set error : " + key);
+            if (log.isInfoEnabled()) {
+				log.info("set error : " + key);
+			}
+
             return false;
         }
         return true;
@@ -282,7 +287,9 @@ public class JedisClusterAdapter {
 
 		Long isOk = getJedisCluster().setnx(key.getBytes(), HessionSerializeUtil.serialize(value));
         if (isOk != 1L) {
-            if (log.isInfoEnabled()) log.info("setnx error : " + key);
+            if (log.isInfoEnabled()) {
+				log.info("setnx error : " + key);
+			}
             return false;
         }
 		return true;
@@ -327,7 +334,9 @@ public class JedisClusterAdapter {
 		
 		byte[] rs = getJedisCluster().getSet(key.getBytes(), HessionSerializeUtil.serialize(value));
         if (rs == null) {
-            if (log.isInfoEnabled()) log.info("getSet error : " + key);
+            if (log.isInfoEnabled()) {
+				log.info("getSet error : " + key);
+			}
             return null;
         }
 		return (E) HessionSerializeUtil.deserialize(rs);
@@ -350,7 +359,9 @@ public class JedisClusterAdapter {
 		if(code != null && code == 1){
 			return true;
 		}
-		if (log.isInfoEnabled()) log.info("hset error : " + key);
+		if (log.isInfoEnabled()) {
+			log.info("hset error : " + key);
+		}
 		return false;
 	}
 	
@@ -371,7 +382,9 @@ public class JedisClusterAdapter {
 		if(code != null && code == 1){
 			return true;
 		}
-		if (log.isInfoEnabled()) log.info("hset error : " + key);
+		if (log.isInfoEnabled()) {
+			log.info("hset error : " + key);
+		}
 		return false;
 	}
 	
@@ -426,7 +439,9 @@ public class JedisClusterAdapter {
 		Long isOk = getJedisCluster().expire(key, seconds);
 
 		if (isOk != 1L) {
-			if (log.isInfoEnabled()) log.info("setnx error : " + key);
+			if (log.isInfoEnabled()) {
+				log.info("setnx error : " + key);
+			}
 			return false;
 		}
 		return true;
